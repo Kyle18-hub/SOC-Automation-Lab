@@ -13,7 +13,7 @@ Steps:
 5. Next download Sysmon & save the Sysmonconfig.xml file to your device
 6. In powershell, navigate to the Sysmon directory and install Sysmon with the xml file. Command: .\sysmon64.exe -i sysmonconfig.xml
 7. Navigate to digital ocean and begin creating your cloud server (droplet)
-8. workflow.png
+8. 
 
 Tools Used:
 ----------
