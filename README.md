@@ -38,7 +38,25 @@ In the virtual machine:
 13. Next run a curl command on the machine to install Wazuh, the command will be: "curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a". Once it has installed, make sure you save the username and password it gives you as this will be necessary.
 14. Copy your public IP address from your Digital Ocean droplet and go into a new browser and enter https://[your IP address], you will the be presented with the following screen where you must enter your wazuh username and password. <br> <br> <img src="https://github.com/user-attachments/assets/f217f82c-71aa-4611-9e50-22b402125658" width="400" height="300" alt="WazuhDashboard"/>
 
-15. Next you will create another droplet for theHive
+15. Next you will create another droplet for theHive using the same steps. Launch the droplet and follow the steps laid out at [The Hive Installation](https://docs.strangebee.com/thehive/installation/step-by-step-installation-guide/#java-virtual-machine) to install the necessary components. These will include, theHive itself, Java, Cassandra and ElasticSearch
+16. Next type in nano /etc/cassandra/cassandra.yaml which will redirect you to a page that looks like this: <br><br> <img src="https://github.com/user-attachments/assets/606df1aa-dcea-4ef8-a403-c0da005dda99" width="400" height="300" />
+17. Press ctrl+w which will bring up a search bar. Seach "listen" and scroll until you see "listen_address" which by default should be localhost, change this to the IP address of your "theHive" server
+18. Press ctrl+w wagain. Seach "rpc_address" and scroll until you see "rpc_address" which by default should be localhost, change this to the IP address of your "theHive" server
+19. Press ctrl+w again. Seach "seed_provider" until you see "seed_provider" which by default should be localhost, change this to the IP address of your "theHive" server but make sure to leave the ":7000" at the end of the IP address
+20. Next hit ctrl+x to save it and then press "y"
+21. The next step will be to stop the cassandra service by entering the command "systemctl stop cassandra.service". You also need to remove old files by typing in the command "rm -rf /var/lib/cassandra/*"
+22. Now that you have removed the old files you can start the service by entering "systemctl start cassandra.service". Next, make sure cassandra is running by typing "systemctl status cassandra.service" and you should see this: <br> <br> <img src="https://github.com/user-attachments/assets/3eb35c70-fbb1-4783-a6e5-333916aed9c8" width="400" height="300"/>
+23. Next we will need to configure elastic search by entering the following; "nano /etc/elasticsearch/elasticsearch.yml" which will bring up the following: <br><br> <img src="https://github.com/user-attachments/assets/ea583a44-f3b2-4954-91b5-9b48649c1748" width="400" height="300"/>
+
+24. Next remove the comment for the cluster name and rename your cluster, I named mine thehive for consistency. You also need to remove the comment for "node.name" but you can leave the node as is.
+25. Continue scrolling down until you get to "network.host", uncomment it and change the IP address to the public address of your hive server. Press ctrl+x to save your changes
+26. Once you're finished configuring, enter the following commands: "systemctl start elasticsearch", "systemctl enable elasticsearch", "systemctl status elasticsearch.service". These commands will start Elasticsearch and allow it to run. You should be presented with the following output: <br> <br> <img src="https://github.com/user-attachments/assets/ba580438-40be-4f10-bb9e-7f00b05866dd" width="400" height="300"/>
+27. 
+
+
+
+
+
 
 
 # Conclusion
@@ -60,33 +78,3 @@ VirtualBox - A free and open-source software that allows you to create and run v
 SysMon - A windows system service that logs detailed information about system activity.  
 TheHive - An open-source Security Incident Response Platform (SIRP) designed to help manage and respond to security incidents.  
 Digital Ocean - A cloud infrastructure provider offering scalable virtual servers (Droplets) and managed services.
-
-
-
-
-
-
-
-Dependences
-apt install wget gnupg apt-transport-https git ca-certificates ca-certificates-java curl  software-properties-common python3-pip lsb-release
-
-wget -qO- https://apt.corretto.aws/corretto.key | sudo gpg --dearmor -o /usr/share/keyrings/corretto.gpg
-echo "deb [signed-by=/usr/share/keyrings/corretto.gpg] https://apt.corretto.aws stable main" | sudo tee /etc/apt/sources.list.d/corretto.list
-sudo apt update
-sudo apt install -y java-11-amazon-corretto-jdk
-echo JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto" | sudo tee -a /etc/environment
-export JAVA_HOME="/usr/lib/jvm/java-11-amazon-corretto"
-
-Install Cassandra
-wget -qO -  https://downloads.apache.org/cassandra/KEYS | sudo gpg --dearmor  -o /usr/share/keyrings/cassandra-archive.gpg
-echo "deb [signed-by=/usr/share/keyrings/cassandra-archive.gpg] https://debian.cassandra.apache.org 40x main" |  sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
-sudo apt update
-sudo apt install cassandra
-
-Install ElasticSearch
-wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch |  sudo gpg --dearmor -o /usr/share/keyrings/elasticsearch-keyring.gpg
-sudo apt-get install apt-transport-https
-echo "deb [signed-by=/usr/share/keyrings/elasticsearch-keyring.gpg] https://artifacts.elastic.co/packages/7.x/apt stable main" |  sudo tee /etc/apt/sources.list.d/elastic-7.x.list
-sudo apt update
-sudo apt install elasticsearch
-
