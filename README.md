@@ -57,14 +57,28 @@ In the virtual machine:
 30. In this configuration file, scroll down and change the hostname to the public IP of your droplet. You also need to change the cluster name to whatever you renamed your cluster name to in cassandra. Keep scrolling until you see "application.baseURL" you need to change it so that application.baseURL = "https://[YourDropletIP]:9000".
 31. Make sure to save your configurations and enter the following commands: "systemctl start thehive", "systemctl enable thehive", "systemctl status thehive". This will start theHive and check that it is running. <br><br> <img src="https://github.com/user-attachments/assets/0565c2fa-5518-4470-b66d-dc9a07e7b4e9" height="100" width="400" />
 <br>
-**Please note, my laptop does not have the capability to complete the rest of the project but the steps are as follows**
+**Please note, my laptop does not have the capability to complete the rest of the project but the steps are as follows and screenshots wil be provided where possible**
 <br>
 
-33. Return to the Wazuh dashboard by entering your credentials, once on the dashboard you will see that there are no agents. Click "Add Agent". Once you are adding the agent, you will need to make sure that you have set it to a Windows machine and assign the server address as your Wazuh droplet IP.
-34. At the bottom of the screen you will see something that says, "Run the following commands to download and install the Wazuh agent". Copy those commands and run them in PowerShell
+33. Return to the Wazuh dashboard by entering your credentials, once on the dashboard you will see that there are no agents. Click "Add Agent". Once you are adding the agent, you will need to make sure that you have set it to a Windows machine and assign the server address as your Wazuh droplet IP. <br><br><img src="https://github.com/user-attachments/assets/10ff79c8-096e-466f-9cb9-2c31b4db62bf" width="400" height="300" />
 
 
+34. At the bottom of the screen you will see something that says, "Run the following commands to download and install the Wazuh agent". Copy those commands and run them in PowerShell to begin installation
+35. Once the agent installation is complete, type "net startwazuhsvc" into poweshell to start the service <br><br><img src="https://github.com/user-attachments/assets/936cbcba-143a-4dac-8f07-ba9b0e344f8b" width="400" height="300" />
 
+36. You should now be able to see one active agent in your dashboard.<br><br><img src="https://github.com/user-attachments/assets/bef9a839-a9f7-4275-87f4-6f2661fffa3b" width="500" height="300" />
+
+37. Locate the ossec-agent file. The path is shown
+38. Configure Sysmon Log Analysis by finding the log analysis section in the osc.conf file. To add Sysmon logs, retrieve the channel name through Event Viewer: Open Event Viewer, expand Applications and Services Logs > Microsoft > Windows > Sysmon. Right-click Operational, select Properties, and copy the full log channel name. Update the configuration file with the Sysmon channel name.
+39. Ingest Sysmon Logs. Modify the configuration file by replacing the default log location with the Sysmon channel. Disable logging for unnecessary sources like Application, Security, or System, unless needed. Save the changes and restart the Wazuh service for the updates to take effect.
+40. Download Mimikatz. You will need to disable Windows Defender temporarily or exclude the Downloads folder to avoid detection when downloading Mimikatz. Download and extract Mimikatz, run it through an Administrator PowerShell session.
+41. Check Logs in the Wazuh Dashboard. Go to the Wazuh dashboard under the Events or Alerts section. Search for Sysmon or Mimikatz events, ensuring that Sysmon is configured correctly.
+
+42. Enable Log All Feature. If no events show up, modify osc.conf to enable logging of all events by changing the log_all and log_all_json settings to yes. Restart the Wazuh Manager and Filebeat services after making configuration changes.
+
+43. Create a New Index in Wazuh. Create a new index pattern for Archives in the Wazuh dashboard by navigating to Stack Management > Index Patterns. Use this index to search all logs, including those not triggering specific rules.
+44. Create Custom Alerts. Use Event ID 1 (process creation) from Sysmon to track Mimikatz executions. Configure Wazuh rules based on the original file name field (e.g., mimikatz.exe), rather than image or path, to avoid bypass through file renaming.
+45. Force Log Ingestion (Optional). If logs aren't appearing in the dashboard immediately, force log ingestion by restarting the Wazuh Manager and checking for archives under var/ossec/logs/archives.
 
 
 
