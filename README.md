@@ -51,7 +51,18 @@ In the virtual machine:
 24. Next remove the comment for the cluster name and rename your cluster, I named mine thehive for consistency. You also need to remove the comment for "node.name" but you can leave the node as is.
 25. Continue scrolling down until you get to "network.host", uncomment it and change the IP address to the public address of your hive server. Press ctrl+x to save your changes
 26. Once you're finished configuring, enter the following commands: "systemctl start elasticsearch", "systemctl enable elasticsearch", "systemctl status elasticsearch.service". These commands will start Elasticsearch and allow it to run. You should be presented with the following output: <br> <br> <img src="https://github.com/user-attachments/assets/ba580438-40be-4f10-bb9e-7f00b05866dd" width="400" height="300"/>
-27. 
+27. After making sure that both cassandra and elasticsearch are active, we will begin to configure theHive. To do this type in the command "ls -la /opt/thp". This will check if theHive has access to the correct files. <br><br><img src="https://github.com/user-attachments/assets/c5e77cdc-815d-4396-a783-4d9652d74a26" width="400" height="300"/>
+28. As we can see in the above screenshot, theHive does not have access to the correct files. To fix this we need to enter the command "chown -R thehive:thehive /opt/thp", this will change ownership to theHive. Type the command "ls -la /opt/thp" again to make sure that ownership was changed. <br><br><img src="https://github.com/user-attachments/assets/04465914-d6c3-4219-9d38-7e5ba806d7ab" width="400" height="200" />
+29. Type in the command "nano /etc/thehive.application.conf" to begin configuring theHive. You should see a page that looks like this: <br><br> <img src="https://github.com/user-attachments/assets/7a274b14-0404-49a0-a706-45ad2612f630" height="300" style="width: auto;" />
+30. In this configuration file, scroll down and change the hostname to the public IP of your droplet. You also need to change the cluster name to whatever you renamed your cluster name to in cassandra. Keep scrolling until you see "application.baseURL" you need to change it so that application.baseURL = "https://[YourDropletIP]:9000".
+31. Make sure to save your configurations and enter the following commands: "systemctl start thehive", "systemctl enable thehive", "systemctl status thehive". This will start theHive and check that it is running. <br><br> <img src="https://github.com/user-attachments/assets/0565c2fa-5518-4470-b66d-dc9a07e7b4e9" height="100" width="400" />
+32.
+
+
+
+
+
+
 
 
 
