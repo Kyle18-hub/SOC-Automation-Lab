@@ -56,7 +56,12 @@ In the virtual machine:
 29. Type in the command "nano /etc/thehive.application.conf" to begin configuring theHive. You should see a page that looks like this: <br><br> <img src="https://github.com/user-attachments/assets/7a274b14-0404-49a0-a706-45ad2612f630" height="300" style="width: auto;" />
 30. In this configuration file, scroll down and change the hostname to the public IP of your droplet. You also need to change the cluster name to whatever you renamed your cluster name to in cassandra. Keep scrolling until you see "application.baseURL" you need to change it so that application.baseURL = "https://[YourDropletIP]:9000".
 31. Make sure to save your configurations and enter the following commands: "systemctl start thehive", "systemctl enable thehive", "systemctl status thehive". This will start theHive and check that it is running. <br><br> <img src="https://github.com/user-attachments/assets/0565c2fa-5518-4470-b66d-dc9a07e7b4e9" height="100" width="400" />
-32.
+<br>
+**Please note, my laptop does not have the capability to complete the rest of the project but the steps are as follows**
+<br>
+
+33. Return to the Wazuh dashboard by entering your credentials, once on the dashboard you will see that there are no agents. Click "Add Agent". Once you are adding the agent, you will need to make sure that you have set it to a Windows machine and assign the server address as your Wazuh droplet IP.
+34. At the bottom of the screen you will see something that says, "Run the following commands to download and install the Wazuh agent". Copy those commands and run them in PowerShell
 
 
 
