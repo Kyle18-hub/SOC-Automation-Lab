@@ -68,17 +68,34 @@ In the virtual machine:
 
 36. You should now be able to see one active agent in your dashboard.<br><br><img src="https://github.com/user-attachments/assets/bef9a839-a9f7-4275-87f4-6f2661fffa3b" width="500" height="300" />
 
-37. Locate the ossec-agent file. The path is shown
-38. Configure Sysmon Log Analysis by finding the log analysis section in the osc.conf file. To add Sysmon logs, retrieve the channel name through Event Viewer: Open Event Viewer, expand Applications and Services Logs > Microsoft > Windows > Sysmon. Right-click Operational, select Properties, and copy the full log channel name. Update the configuration file with the Sysmon channel name.
-39. Ingest Sysmon Logs. Modify the configuration file by replacing the default log location with the Sysmon channel. Disable logging for unnecessary sources like Application, Security, or System, unless needed. Save the changes and restart the Wazuh service for the updates to take effect.
-40. Download Mimikatz. You will need to disable Windows Defender temporarily or exclude the Downloads folder to avoid detection when downloading Mimikatz. Download and extract Mimikatz, run it through an Administrator PowerShell session.
-41. Check Logs in the Wazuh Dashboard. Go to the Wazuh dashboard under the Events or Alerts section. Search for Sysmon or Mimikatz events, ensuring that Sysmon is configured correctly.
+37. Locate the ossec.conf file. The path is shown in the following image: <br> <br> <img src="https://github.com/user-attachments/assets/4d58e578-20e8-4006-84e2-beb5e8362df5" width="400" height="300" />
 
-42. Enable Log All Feature. If no events show up, modify osc.conf to enable logging of all events by changing the log_all and log_all_json settings to yes. Restart the Wazuh Manager and Filebeat services after making configuration changes.
 
-43. Create a New Index in Wazuh. Create a new index pattern for Archives in the Wazuh dashboard by navigating to Stack Management > Index Patterns. Use this index to search all logs, including those not triggering specific rules.
-44. Create Custom Alerts. Use Event ID 1 (process creation) from Sysmon to track Mimikatz executions. Configure Wazuh rules based on the original file name field (e.g., mimikatz.exe), rather than image or path, to avoid bypass through file renaming.
-45. Force Log Ingestion (Optional). If logs aren't appearing in the dashboard immediately, force log ingestion by restarting the Wazuh Manager and checking for archives under var/ossec/logs/archives.
+38. Configure Sysmon Log Analysis by finding the log analysis section in the ossec.conf file. To add Sysmon logs, retrieve the channel name through Event Viewer: Open Event Viewer, expand Applications and Services Logs > Microsoft > Windows > Sysmon. Right-click Operational, select Properties, and copy the full log channel name. Update the configuration file with the Sysmon channel name. <img src="https://github.com/user-attachments/assets/c99282a3-c73a-4445-bb51-00757fe4831c" width="400" height="300" />
+
+39. In the 'services' application in your VM you will need to restart Wazuh to allow the changes to take effect.
+40. Return to your Wazuh dashboard and on the menu click on threat intelligence > threat hunting. Once you're in the right menu type "sysmon" into the search bar and you should get something that looks like the following: <br><br> <img src="https://github.com/user-attachments/assets/6545679c-53a8-4d1e-947c-1bea109ec54c" width="400" height="300" />
+
+
+41. Next we will download Mimikatz. To do this you will first need to exclude the Downloads folder to avoid detection when downloading Mimikatz.  <br><br> <img src="https://github.com/user-attachments/assets/7dd31629-b17a-4540-a237-c458c64711db" width="400" height="300" />
+
+42. Download and extract [Mimikatz](https://github.com/gentilkiwi/mimikatz/releases/tag/2.2.0-20220919), your browser might try and block it. If it does just click on "download anyway" when you see that it might be unsafe.
+
+43. Run it through an Administrator PowerShell session by changing to its directory in PowerShell and then enter .\mimikatz.exe <br> <br> <img src="https://github.com/user-attachments/assets/f4103d3a-8fe7-4355-bf45-056509118e92" width="400" height="300" />
+
+
+44. Check Logs in the Wazuh Dashboard. Go to the Wazuh dashboard under the Events or Alerts section. Search for Sysmon or Mimikatz events, ensuring that Sysmon is configured correctly.
+
+43. If no events show up, modify ossec.conf to enable logging of all events. Navigate to your Wazuh CLI and type in the command "cp /var/ossec/etc/ossec.conf ~/ossec-backup.conf", this command will create a backup file. Next type in the command "nano /var/ossec/etc/ossec.conf" which will bring up the following interface: <br><br> <img src="https://github.com/user-attachments/assets/422e959a-fc32-4b73-ab75-2f3b51795c67" width="400" height="300" />
+
+44. Under `<Ossec Config>` look for `<logall>no</logall>` and `<logall_json>no</logall_json>` and change the "no" to a "yes" and save it.
+45. Next we will need to restart the Wazuh manager by typing the command "systemctl restart wazuh-manager.service"
+46. Check to make sure that the files were archived
+
+
+44. Create a New Index in Wazuh. Create a new index pattern for Archives in the Wazuh dashboard by navigating to Stack Management > Index Patterns. Use this index to search all logs, including those not triggering specific rules.
+45. Create Custom Alerts. Use Event ID 1 (process creation) from Sysmon to track Mimikatz executions. Configure Wazuh rules based on the original file name field (e.g., mimikatz.exe), rather than image or path, to avoid bypass through file renaming.
+46. Force Log Ingestion (Optional). If logs aren't appearing in the dashboard immediately, force log ingestion by restarting the Wazuh Manager and checking for archives under var/ossec/logs/archives.
 
 
 
@@ -108,3 +125,4 @@ VirtualBox - A free and open-source software that allows you to create and run v
 SysMon - A windows system service that logs detailed information about system activity.  
 TheHive - An open-source Security Incident Response Platform (SIRP) designed to help manage and respond to security incidents.  
 Digital Ocean - A cloud infrastructure provider offering scalable virtual servers (Droplets) and managed services.
+Mimikatz - An open-source tool used to extract plaintext passwords, hashes, and Kerberos tickets from memory on Windows systems. It is commonly used in penetration testing and red teaming exercises to demonstrate security vulnerabilities related to credential management and authentication protocols.
