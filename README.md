@@ -99,9 +99,6 @@ In the virtual machine:
 53. Congratulations! You've successfully set up everything to detect Mimikatz intrusions and monitor Sysmon logs. In the next steps, we'll focus on automating alerts to notify us of these intrusions
 
 
-
-
-
 # Conclusion
 
 By the completion of this project I have successfully set up a robust security infrastructure using VirtualBox, DigitalOcean, Wazuh, and TheHive. Starting with the creation of a virtual machine running Windows and the installation of essential monitoring tools like Sysmon, I laid the foundation for effective event logging. The Wazuh deployment on DigitalOcean, along with its integration with TheHive, allows for detailed threat detection and incident response capabilities.
@@ -119,3 +116,17 @@ TheHive - An open-source Security Incident Response Platform (SIRP) designed to 
 Digital Ocean - A cloud infrastructure provider offering scalable virtual servers (Droplets) and managed services.
 Mimikatz - An open-source tool used to extract plaintext passwords, hashes, and Kerberos tickets from memory on Windows systems. It is commonly used in penetration testing and red teaming exercises to demonstrate security vulnerabilities related to credential management and authentication protocols.
 Shuffler.io - A cloud-based security automation platform that streamlines incident response and threat management. Shuffler.io integrates various security tools, enhancing security operations and improving response times.
+
+Skills Learnt in this project:
+------------------------------
+Virtual Machine Setup and Configuration – Downloading and setting up VirtualBox, creating a virtual machine with a Windows ISO.<br>
+Operating System Installation and Configuration – Installing Windows on a virtual machine and configuring basic settings.<br>
+System Monitoring Tool Deployment – Downloading, configuring, and installing Sysmon for system activity monitoring.<br>
+Firewall Configuration and Network Security – Creating and applying firewalls in DigitalOcean to secure network environments.<br>
+Cloud Infrastructure Management – Creating and managing DigitalOcean droplets for various services, including Wazuh and TheHive.<br>
+Linux System Administration – Performing system upgrades and updates via SSH, managing services, and configuring critical security tools like Wazuh and TheHive.<br>
+Log Analysis and Threat Detection – Configuring Wazuh to detect Sysmon events, managing SIEM dashboards, and analyzing logs for potential threats.<br>
+ElasticSearch and Cassandra Configuration – Setting up and configuring both ElasticSearch and Cassandra databases to work with TheHive.<br>
+Threat Hunting and Intelligence – Using Wazuh’s Threat Hunting features for monitoring suspicious activities such as Mimikatz intrusions.<br>
+Incident Detection with Custom Rules – Writing and implementing custom security rules for intrusion detection and automating alerts for critical incidents.<br>
+Automation of Security Alerts – Implementing tools and processes to automate responses to specific security events like Mimikatz intrusions.<br>
