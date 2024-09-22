@@ -104,15 +104,11 @@ In the virtual machine:
 
 # Conclusion
 
-In this lab, I successfully built and configured a comprehensive Security Operations Center (SOC) automation environment. By integrating tools such as Sysmon, Wazuh and TheHive, I created a robust system capable of automating key SOC tasks including threat detection, incident response, and log analysis.
+By the completion of this project I have successfully set up a robust security infrastructure using VirtualBox, DigitalOcean, Wazuh, and TheHive. Starting with the creation of a virtual machine running Windows and the installation of essential monitoring tools like Sysmon, I laid the foundation for effective event logging. The Wazuh deployment on DigitalOcean, along with its integration with TheHive, allows for detailed threat detection and incident response capabilities.
 
-The process began with setting up VirtualBox and installing Windows, followed by the deployment of Sysmon to monitor system activity. This was complemented by creating a Digital Ocean Droplet to host Wazuh and TheHive, which are critical for security event management and incident response. By forwarding Sysmon logs to Wazuh via Filebeat, I ensured that security events from the Windows machine were captured and analyzed effectively.
+The addition of custom configurations, such as setting up firewalls, ingesting logs with filebeat, and tailoring Wazuh to monitor Sysmon and Mimikatz logs, has enhanced the environment’s ability to track and analyze potential security breaches. By implementing custom rules to detect intrusions, such as Mimikatz attacks, and verifying their accuracy through the Wazuh dashboard, I have created a security system that can actively monitor and respond to advanced threats.
 
-The automation aspect was a major focus, with Bash and Python scripts developed to query ElasticSearch APIs and trigger incident response actions in TheHive. This setup demonstrated how automated workflows can enhance SOC operations, making the detection and response to security incidents more efficient.
-
-Testing the setup with real-world scenarios, such as Nmap scans, validated the effectiveness of the automation and integration. The creation of dashboards in Elastic further allowed for the visualization of logs and alerts, ensuring that the entire SOC automation workflow functioned as intended.
-
-This project not only enhanced my technical skills in SOC automation but also provided practical experience in integrating and configuring security tools. The knowledge gained through this lab is crucial for any SOC analyst role, where the ability to automate and streamline security operations is essential for maintaining a strong security posture.
+This project not only strengthens my detection and response mechanisms but also positions my infrastructure for future improvements. As the next step, focusing on automating alerts and refining your incident response processes will help ensure swift and accurate handling of security events in real time.
 
 Tools Used:
 ----------
@@ -122,3 +118,4 @@ SysMon - A windows system service that logs detailed information about system ac
 TheHive - An open-source Security Incident Response Platform (SIRP) designed to help manage and respond to security incidents.  
 Digital Ocean - A cloud infrastructure provider offering scalable virtual servers (Droplets) and managed services.
 Mimikatz - An open-source tool used to extract plaintext passwords, hashes, and Kerberos tickets from memory on Windows systems. It is commonly used in penetration testing and red teaming exercises to demonstrate security vulnerabilities related to credential management and authentication protocols.
+Shuffler.io - A cloud-based security automation platform that streamlines incident response and threat management. Shuffler.io integrates various security tools, enhancing security operations and improving response times.
