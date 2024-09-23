@@ -97,6 +97,12 @@ In the virtual machine:
 
 52. This rule update will allow us to detect any Mimikatz intrusions into the network.
 53. Congratulations! You've successfully set up everything to detect Mimikatz intrusions and monitor Sysmon logs. In the next steps, we'll focus on automating alerts to notify us of these intrusions
+54. Navigate to [**Shuffle**](https://shuffler.io/) and create a free account.
+55. Create a new workflow and name it whatever you want. Once you have created the workflow, click on the bottom left of the page where it says, "triggers" and add "Webhook" as a trigger and copy the Webhook URI as we will need to add this to the Ossec file. <br><br><img src="https://github.com/user-attachments/assets/fb00dc9b-c419-4876-8970-5a9cfcfdac61" alt="WebHookURI" width="400" height="300">
+56. Head back over to the Wazuh manager to begin adding shuffle. Type in the command "nano /var/ossec/etc/ossec.conf" and enter the following code, making sure to enter your own URL and rule ID: <br><br> <img src="https://github.com/user-attachments/assets/82ee7cf2-444d-4883-9eaa-b34903bcaa85" alt="WazuhOssec" width="400" height="300">
+57. Once you have saved your changes, return to windows powershell and run Mimikatz again. This will make sure that a security event is generated.
+58. Return to shuffle, click on your webhook and then click "start". Click on the icon of a person on the bottom of the page and then click "Test Workflow", you should see something similar to the following once you have clicked on the incident: <img src="https://github.com/user-attachments/assets/f0eb08f6-cee8-4068-95ec-834187f12135" alt="IncidentsInShuffle" width="400" height="300">
+
 
 
 # Conclusion
