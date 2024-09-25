@@ -102,8 +102,30 @@ In the virtual machine:
 56. Head back over to the Wazuh manager to begin adding shuffle. Type in the command "nano /var/ossec/etc/ossec.conf" and enter the following code, making sure to enter your own URL and rule ID: <br><br> <img src="https://github.com/user-attachments/assets/82ee7cf2-444d-4883-9eaa-b34903bcaa85" alt="WazuhOssec" width="400" height="300">
 57. Once you have saved your changes, return to windows powershell and run Mimikatz again. This will make sure that a security event is generated.
 58. Return to shuffle, click on your webhook and then click "start". Click on the icon of a person on the bottom of the page and then click "Test Workflow", you should see something similar to the following once you have clicked on the incident: <img src="https://github.com/user-attachments/assets/f0eb08f6-cee8-4068-95ec-834187f12135" alt="IncidentsInShuffle" width="400" height="300">
+59. Create an account on VirusTotal, copy your API and return to Shuffle and search for VirusTotal. Add VirusTotal to your shuffle. In the VirusTotal icon, change the action to "Get a hash report" and then click on the button that says "Authenticate VirusTotal V3" and enter your API key. Save the workflow.
 
+**Please note that this is where my system crashed as it cannot handle running theHive, Wazuh, and a Virtual Machine simultaneously, the steps to finish the project are as followed**
 
+61. Log in to The Hive using the default credentials.
+62. Create a new organization by clicking the plus button and naming it whatever you choose with any description.
+63. Add users to the organization by clicking the plus button, specifying user details like login, name, profile, and permissions.
+64. Set a password for the account and create an API key for the service account.
+65. Log out of the administrative account and log in to the new organisation account to access the cases and alerts.
+66. Configure Shuffle to work with The Hive by authenticating with the API key and specifying the URL of your Hive instance.
+67. In Shuffle, select "create alert" under find action instead of querying the API.
+68. Connect VirusTotal to The Hive to enable it to analyze Wazug alerts in The Hive.
+69. Set the date field by connecting VirusTotal and executing arguments to include UTC time and a description.
+70. Include relevant information like host, user, external link, flag, severity, source description, status, summary, and tags.
+71. Save and run the workflow to test the integration with The Hive and VirusTotal.
+72. Update the Cloud firewall to allow inbound traffic on Port 9000 for The Hive instance.
+73. Rerun the workflow to ensure that the Hive actions are successful, creating alerts in The Hive.
+74. Access The Hive to view the automatically created alert, containing detailed information about the detection.
+75. Drag and drop the email application in Shuffle to configure sending alerts to email recipients.
+76. Connect VirusTotal to the email application and add the recipient's email to receive alerts.
+77. Input relevant alert details like subject, time, title, host, and user in the email configuration.
+78. Save and rerun the workflow to trigger the email notification to the analyst.
+79. Check the recipient's email for the alert and interact with the email to confirm actions (e.g., block the source IP).
+80. Verify that the automated response works by monitoring the IP tables or relevant logs to ensure the IP is blocked successfully.
 
 # Conclusion
 
